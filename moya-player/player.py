@@ -7,6 +7,9 @@ from PyQt5.QtMultimedia import (QMediaPlayer,
                                 QMediaPlaylist,
                                 QAudio)
 
+class InvalidMediaException(Exception):
+    pass
+
 class Player(QMediaPlayer):
     def __init__ (self):
         self._playlist= QMediaPlaylist()
