@@ -41,3 +41,12 @@ class Player(QMediaPlayer):
     def addToPlaylist(self, audioFile, index=self.length):
         self._playlist.addMedia(loadMediaFile(audioFile))
 
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    url = QUrl.fromLocalFile("/home/nbabulkov/Music/war_pigs.mp3")
+    playlist.addMedia(QMediaContent(url))
+    playlist.setCurrentIndex(1);
+    player = Player()
+    player.setPlaylist(playlist)
+    player.play()
+    sys.exit(app.exec_())
