@@ -10,6 +10,12 @@ from PyQt5.QtMultimedia import (QMediaPlayer,
 class InvalidMediaException(Exception):
     pass
 
+def loadMediaFile(filename):
+    url = QUrl.fromLocalFile(filename)
+    if not url.isValid():
+        raise InvalidMediaException
+    return QMediaContent()
+
 class Player(QMediaPlayer):
     def __init__ (self):
         self._playlist= QMediaPlaylist()
@@ -33,5 +39,5 @@ class Player(QMediaPlayer):
         self._playlist.removeMedia(removeIndex)
 
     def addToPlaylist(self, audioFile, index=self.length):
-        self._playlist.addMedia(QMediaContent(QUrl.fromLocalFile(audioFile)))
+        self._playlist.addMedia(loadMediaFile(audioFile))
 
