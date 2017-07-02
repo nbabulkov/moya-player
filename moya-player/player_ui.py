@@ -2,6 +2,48 @@ import player
 from enum import Enum
 
 from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimedia
+class Ui_Library(QtWidgets.QWidget):
+    def __init__(self, widget):
+        super().__init__(widget)
+        self.centralwidget = widget
+        self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
+        self.tabWidget.setGeometry(QtCore.QRect(30, 10, 731, 341))
+        self.tabWidget.setObjectName("Library")
+
+        self.tab = QtWidgets.QWidget()
+        self.tab.setObjectName("MusicTab")
+        self.listWidget = QtWidgets.QListWidget(self.tab)
+        self.listWidget.setGeometry(QtCore.QRect(0, 0, 751, 341))
+        self.listWidget.setObjectName("Playlist")
+        self.tabWidget.addTab(self.tab, "")
+
+        self.addToPlaylistButton = QtWidgets.QPushButton(self.centralwidget)
+        self.addToPlaylistButton.setGeometry(QtCore.QRect(40, 370, 161, 31))
+        self.addToPlaylistButton.setObjectName("addToPlaylistButton")
+
+        self.removeFromPlaylistButton = QtWidgets.QPushButton(self.centralwidget)
+        self.removeFromPlaylistButton.setGeometry(QtCore.QRect(230, 370, 151, 31))
+        self.removeFromPlaylistButton.setObjectName("removeFromPlaylistButton")
+
+        self.loadPlaylistButton = QtWidgets.QPushButton(self.centralwidget)
+        self.loadPlaylistButton.setGeometry(QtCore.QRect(410, 370, 161, 31))
+        self.loadPlaylistButton.setObjectName("loadPlaylistButton")
+
+        self.savePlaylistButton = QtWidgets.QPushButton(self.centralwidget)
+        self.savePlaylistButton.setGeometry(QtCore.QRect(590, 370, 161, 31))
+        self.savePlaylistButton.setObjectName("savePlaylistButton")
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        _translate = QtCore.QCoreApplication.translate
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),
+                                  _translate("MainWindow", "Music"))
+        self.addToPlaylistButton.setText(_translate("MainWindow", "Add"))
+        self.removeFromPlaylistButton.setText(_translate("MainWindow", "Remove"))
+        self.loadPlaylistButton.setText(_translate("MainWindow", "Load"))
+        self.savePlaylistButton.setText(_translate("MainWindow", "Save"))
+
 
 class Ui_MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
