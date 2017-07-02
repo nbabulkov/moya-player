@@ -13,10 +13,13 @@ class InvalidMediaException(Exception):
     pass
 
 def loadMediaFile(filename):
-    url = QUrl.fromLocalFile(filename)
+    url = QtCore.QUrl.fromLocalFile(filename)
     if not url.isValid():
         raise InvalidMediaException
-    return QMediaContent()
+    return QtMultimedia.QMediaContent(url)
+
+class Player(QtMultimedia.QMediaPlayer):
+    changedStatus = QtCore.pyqtSignal('QString')
 
 class Player(QMediaPlayer):
     def __init__ (self):
