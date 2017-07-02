@@ -61,3 +61,19 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.events()
         self.show()
 
+    def events(self):
+        self.library.addToPlaylistButton.clicked.connect(self.addToPlaylist)
+        self.library.listWidget.itemDoubleClicked.connect(self.selectPlaying)
+        self.progressBar.sliderMoved.connect(self.player.setPosition)
+        self.player.positionChanged.connect(self.progressBar.setValue)
+        self.volumeBar.valueChanged.connect(self.player.setVolume)
+        self.playButton.clicked.connect(self.playOrPause)
+        self.player.durationChanged.connect(self.adjustAudioDuration)
+        self.playbackButton.statusChanged.connect(self.player.setPlaybackMode)
+        self.forwardButton.clicked.connect(self.player.next)
+        self.backwardButton.clicked.connect(self.player.previous)
+        self.player.changedStatus.connect(self.changePlaying)
+        self.player.positionChanged.connect(self.adjustAudioPosition)
+        self.stopButton.clicked.connect(self.player.stop)
+        self.library.removeFromPlaylistButton.clicked.connect(self.removeFromPlaylist)
+
