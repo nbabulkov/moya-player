@@ -53,29 +53,50 @@ class Player(QtMultimedia.QMediaPlayer):
         self.changedStatus.emit(self.status)
 
     @property
-    def length(self):
+    def playlistSize(self):
         return self._playlist.mediaCount()
 
     @property
-    def index(self):
+    def playlistIndex(self):
         return self._playlist.currentIndex()
 
     @property
     def playlistProgress(self):
-        return self.index, self.length
+        return self.playlistIndex, self.playlistSize
+
+    @property
+    def playProgress(self):
+        return self.position, self.duration
+
+    @QtCore.pyqtSlot(QtMultimedia.QMediaPlaylist.PlaybackMode)
+    def setPlaybackMode(self, mode):
+        self._playlist.setPlaybackMode(mode)
+
+    @QtCore.pyqtSlot()
+    def next(self):
+        self._playlist.next()
+
+    @QtCore.pyqtSlot()
+    def previous(self):
+        self._playlist.previous()
 
     def removeFromPlaylist(self, removeIndex):
         self._playlist.removeMedia(removeIndex)
 
-    def addToPlaylist(self, audioFile, index=self.length):
+    def addToPlaylist(self, audioFile):
         self._playlist.addMedia(loadMediaFile(audioFile))
 
+    def setIndex(self, index):
+        if index < self.playlistSize and self.playlistSize >= 0:
+            self._playlist.setCurrentIndex(index)
+
+
 if __name__ == '__main__':
+    import sys
     app = QApplication(sys.argv)
-    url = QUrl.fromLocalFile("/home/nbabulkov/Music/war_pigs.mp3")
-    playlist.addMedia(QMediaContent(url))
-    playlist.setCurrentIndex(1);
+    url = "/home/nbabulkov/Music/war_pigs.mp3"
     player = Player()
-    player.setPlaylist(playlist)
+    player.addToPlaylist(url)
     player.play()
     sys.exit(app.exec_())
+
