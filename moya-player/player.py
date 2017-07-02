@@ -3,6 +3,11 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5 import QtMultimedia
 from tinytag import TinyTag
 
+PLAYER_STATES = {
+    QtMultimedia.QMediaPlayer.StoppedState: "Stopped",
+    QtMultimedia.QMediaPlayer.PlayingState: "Playing",
+    QtMultimedia.QMediaPlayer.PausedState: "Paused"
+}
 
 class InvalidMediaException(Exception):
     pass
