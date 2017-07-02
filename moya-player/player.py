@@ -25,11 +25,14 @@ def getSong(audioPath):
 class Player(QtMultimedia.QMediaPlayer):
     changedStatus = QtCore.pyqtSignal('QString')
 
-class Player(QMediaPlayer):
     def __init__ (self):
-        self._playlist= QMediaPlaylist()
         super().__init__()
-        self.setAudioRole(QAudio.MusicRole)
+        self.status = 'Stopped'
+        self._playlist = QtMultimedia.QMediaPlaylist()
+        self._playlist.setPlaybackMode(QtMultimedia.QMediaPlaylist.Sequential)
+        self._playlist.setCurrentIndex(1)
+        self.setPlaylist(self._playlist)
+        self.setAudioRole(QtMultimedia.QAudio.MusicRole)
         self.setVolume(50)
 
     @property
