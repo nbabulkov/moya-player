@@ -3,6 +3,10 @@ from enum import Enum
 
 from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimedia
 
+def millisToStr(millis):
+    minutes, seconds = int((millis/(1000*60))%60), int((millis/1000)%60)
+    return "{}:{}".format(minutes, seconds)
+
 class PlaybackButton(QtWidgets.QPushButton):
     statusChanged = QtCore.pyqtSignal(QtMultimedia.QMediaPlaylist.PlaybackMode)
 
