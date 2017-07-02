@@ -78,6 +78,31 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.library.removeFromPlaylistButton.clicked.connect(self.removeFromPlaylist)
 
     @QtCore.pyqtSlot()
+    def removeFromPlaylist(self):
+        for item in self.library.listWidget.selectedItems():
+            print(item.text())
+            self.library.listWidget.removeItemWidget(item)
+
+    @QtCore.pyqtSlot(QtWidgets.QListWidgetItem)
+    def selectPlaying(self, itemClicked):
+        selectedIndex = self.library.listWidget.row(itemClicked)
+        self.player.setIndex(selectedIndex + 1)
+        self.playingLabel.setText(self.player.status + ": " + itemClicked.text())
+
+    @QtCore.pyqtSlot('qint64')
+    def adjustAudioPosition(self, position):
+        self.positionLabel.setText(millisToStr(position))
+
+    @QtCore.pyqtSlot('qint64')
+    def adjustAudioDuration(self, duration):
+        self.progressBar.setRange(0, duration)
+        self.durationLabel.setText(millisToStr(duration))
+
+    @QtCore.pyqtSlot('QString')
+    def changePlaying(self, status):
+        self.playingLabel.setText(status)
+
+    @QtCore.pyqtSlot()
     def playOrPause(self):
         if self.player.state() == QtMultimedia.QMediaPlayer.PlayingState:
             self.playButton.setText("Play")
@@ -85,6 +110,16 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         else:
             self.playButton.setText("Pause")
             self.player.play()
+
+    @QtCore.pyqtSlot()
+    def addToPlaylist(self):
+        path = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file')[0]
+        self.player.addToPlaylist(path)
+        self.library.listWidget.addItem(player.getSong(path))
+
+    def addSong(self, url):
+        self.player.addToPlaylist(url)
+        self.library.listWidget.addItem(player.getSong(url))
 
     def initPlaylistUI(self):
         self.library = Ui_Library(self.centralwidget)
