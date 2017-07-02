@@ -18,6 +18,10 @@ def loadMediaFile(filename):
         raise InvalidMediaException
     return QtMultimedia.QMediaContent(url)
 
+def getSong(audioPath):
+    tags = TinyTag.get(audioPath)
+    return "{} - {}".format(tags.artist, tags.title)
+
 class Player(QtMultimedia.QMediaPlayer):
     changedStatus = QtCore.pyqtSignal('QString')
 
