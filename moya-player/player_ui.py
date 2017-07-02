@@ -86,4 +86,55 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.playButton.setText("Pause")
             self.player.play()
 
+    def initPlaylistUI(self):
+        self.library = Ui_Library(self.centralwidget)
 
+    def initControlButtons(self):
+        self.playButton = QtWidgets.QPushButton(self.centralwidget)
+        self.playButton.setGeometry(QtCore.QRect(310, 490, 81, 41))
+        self.playButton.setObjectName("playButton")
+
+        self.stopButton = QtWidgets.QPushButton(self.centralwidget)
+        self.stopButton.setGeometry(QtCore.QRect(400, 490, 81, 41))
+        self.stopButton.setObjectName("stopButton")
+
+        self.forwardButton = QtWidgets.QPushButton(self.centralwidget)
+        self.forwardButton.setGeometry(QtCore.QRect(500, 490, 71, 34))
+        self.forwardButton.setObjectName("forwardButton")
+
+        self.backwardButton = QtWidgets.QPushButton(self.centralwidget)
+        self.backwardButton.setGeometry(QtCore.QRect(210, 490, 81, 31))
+        self.backwardButton.setObjectName("backwardButton")
+
+        self.playbackButton = PlaybackButton(self.centralwidget)
+        self.playbackButton.setGeometry(QtCore.QRect(30, 490, 131, 31))
+        self.playbackButton.setObjectName("playbackButton")
+
+    def initMenuBar(self):
+        self.menubar = QtWidgets.QMenuBar(self)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 30))
+        self.menubar.setObjectName("menubar")
+        self.setMenuBar(self.menubar)
+
+    def initStatusBar(self):
+        self.statusbar = QtWidgets.QStatusBar(self)
+        self.statusbar.setObjectName("statusbar")
+        self.setStatusBar(self.statusbar)
+
+    def retranslateUi(self):
+        _translate = QtCore.QCoreApplication.translate
+        self.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.playButton.setText(_translate("MainWindow", "Play"))
+        self.stopButton.setText(_translate("MainWindow", "Stop"))
+        self.forwardButton.setText(_translate("MainWindow", "Forward"))
+        self.backwardButton.setText(_translate("MainWindow", "Backward"))
+        self.playingLabel.setText(_translate("MainWindow", "Stoped"))
+        self.playingLabel.setAlignment(QtCore.Qt.AlignHCenter)
+        self.muteButton.setText(_translate("MainWindow", "Mute"))
+
+if __name__ == '__main__':
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    m = Ui_MainWindow()
+    m.addSong('/home/nbabulkov/Music/war_pigs.mp3')
+    sys.exit(app.exec_())
