@@ -1,11 +1,8 @@
-import sys
-from PyQt5.QtCore import QUrl
+from PyQt5 import QtCore
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtMultimedia import (QMediaPlayer,
-                                QMediaPlaylist,
-                                QMediaContent,
-                                QMediaPlaylist,
-                                QAudio)
+from PyQt5 import QtMultimedia
+from tinytag import TinyTag
+
 
 class InvalidMediaException(Exception):
     pass
