@@ -2,6 +2,36 @@ import player
 from enum import Enum
 
 from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimedia
+
+class PlaybackButton(QtWidgets.QPushButton):
+    statusChanged = QtCore.pyqtSignal(QtMultimedia.QMediaPlaylist.PlaybackMode)
+
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.__status = QtMultimedia.QMediaPlaylist.Sequential
+        self.setText("Sequential")
+        self.events()
+
+    def events(self):
+        self.clicked.connect(self.changeStatus)
+
+    @QtCore.pyqtSlot()
+    def changeStatus(self):
+        if self.__status == QtMultimedia.QMediaPlaylist.Sequential:
+            self.__status = QtMultimedia.QMediaPlaylist.CurrentItemInLoop
+            self.setText("Repeat Song")
+        elif self.__status == QtMultimedia.QMediaPlaylist.CurrentItemInLoop:
+            self.__status = QtMultimedia.QMediaPlaylist.Loop
+            self.setText("Repeat Playlist")
+        elif self.__status == QtMultimedia.QMediaPlaylist.Loop:
+            self.__status = QtMultimedia.QMediaPlaylist.Sequential
+            self.setText("Sequential")
+        else:
+            self.__status = QtMultimedia.QMediaPlaylist.Random
+            self.setText("Shuffle")
+        self.statusChanged.emit(self.__status)
+
+
 class Ui_Library(QtWidgets.QWidget):
     def __init__(self, widget):
         super().__init__(widget)
