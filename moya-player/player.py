@@ -34,6 +34,23 @@ class Player(QtMultimedia.QMediaPlayer):
         self.setPlaylist(self._playlist)
         self.setAudioRole(QtMultimedia.QAudio.MusicRole)
         self.setVolume(50)
+        self.events()
+
+    def events(self):
+        self.stateChanged.connect(self.changeState)
+
+    @QtCore.pyqtSlot()
+    def mute(self):
+        self.setVolume(0)
+
+    @QtCore.pyqtSlot(QtMultimedia.QMediaPlayer.State)
+    def changeState(self, state):
+        song = self._playlist.currentMedia().canonicalUrl().path()
+        if song is not '':
+            song = getSong(song)
+
+        self.status = "{}: {}".format(PLAYER_STATES[state], song)
+        self.changedStatus.emit(self.status)
 
     @property
     def length(self):
