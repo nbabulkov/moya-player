@@ -77,3 +77,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.stopButton.clicked.connect(self.player.stop)
         self.library.removeFromPlaylistButton.clicked.connect(self.removeFromPlaylist)
 
+    @QtCore.pyqtSlot()
+    def playOrPause(self):
+        if self.player.state() == QtMultimedia.QMediaPlayer.PlayingState:
+            self.playButton.setText("Play")
+            self.player.pause()
+        else:
+            self.playButton.setText("Pause")
+            self.player.play()
+
+
